@@ -1,16 +1,959 @@
 ---
+// Main page for Snaphalagulus clothing company
+import logoImage from '../assets/snaphalagus_logo-removebg-preview.png';
+import tshirtImage from '../assets/t-shirt.png';
+import hoodieImage from '../assets/hoodie.png';
+import shirtImage from '../assets/shirt.png';
+import mugImage from '../assets/mug.png';
+import { translations } from '../i18n/translations';
 
+const siteUrl = 'https://snaphalagulus.eu';
+const defaultLang = 'en';
+
+// SEO data for both languages
+const seoData: Record<string, { title: string; description: string; keywords: string; lang: string }> = {
+	en: {
+		title: 'Snaphalagulus - Custom Clothing & Personalized Apparel',
+		description: 'Order custom T-shirts, hoodies, mugs, and more with your personalized designs. Premium quality custom clothing and apparel. Perfect for gifts and special occasions.',
+		keywords: 'custom clothing, personalized t-shirts, custom hoodies, custom apparel, personalized gifts, custom mugs, custom shirts, personalized clothing, custom printing, t-shirt printing, hoodie printing',
+		lang: 'en'
+	},
+	it: {
+		title: 'Snaphalagulus - Abbigliamento Personalizzato e Abbigliamento su Misura',
+		description: 'Ordina T-shirt personalizzate, felpe, tazze e altro ancora con i tuoi design personalizzati. Abbigliamento personalizzato e capi di qualità premium. Perfetto per regali e occasioni speciali.',
+		keywords: 'abbigliamento personalizzato, t-shirt personalizzate, felpe personalizzate, abbigliamento su misura, regali personalizzati, tazze personalizzate, camicie personalizzate, stampa personalizzata, stampa t-shirt, stampa felpe',
+		lang: 'it'
+	}
+};
+
+// Get language from default (for SSR, will use defaultLang)
+// Client-side will read from localStorage
+const currentLang = defaultLang as 'en' | 'it';
+
+const seo = seoData[currentLang];
+const t = translations[currentLang];
 ---
 
-<html lang="en">
+<html lang={seo.lang} data-lang={currentLang}>
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		
+		<!-- Primary Meta Tags -->
+		<title>{seo.title}</title>
+		<meta name="title" content={seo.title} />
+		<meta name="description" content={seo.description} />
+		<meta name="keywords" content={seo.keywords} />
+		<meta name="robots" content="index, follow" />
+		<meta name="language" content={seo.lang === 'it' ? 'Italian' : 'English'} />
+		<meta name="author" content="Snaphalagulus" />
+		
+		<!-- Alternate Languages -->
+		<link rel="alternate" hreflang="en" href={siteUrl} />
+		<link rel="alternate" hreflang="it" href={siteUrl} />
+		<link rel="alternate" hreflang="x-default" href={siteUrl} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={siteUrl} />
+		<meta property="og:title" content={seo.title} />
+		<meta property="og:description" content={seo.description} />
+		<meta property="og:image" content={`${siteUrl}${logoImage.src}`} />
+		<meta property="og:site_name" content="Snaphalagulus" />
+		<meta property="og:locale" content={seo.lang === 'it' ? 'it_IT' : 'en_US'} />
+		<meta property="og:locale:alternate" content={seo.lang === 'it' ? 'en_US' : 'it_IT'} />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={siteUrl} />
+		<meta property="twitter:title" content={seo.title} />
+		<meta property="twitter:description" content={seo.description} />
+		<meta property="twitter:image" content={`${siteUrl}${logoImage.src}`} />
+		
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" href={logoImage.src} />
+		<link rel="canonical" href={siteUrl} />
+		
+		<!-- Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "ClothingStore",
+			"name": "Snaphalagulus",
+			"description": seo.description,
+			"url": siteUrl,
+			"logo": `${siteUrl}${logoImage.src}`,
+			"image": `${siteUrl}${logoImage.src}`,
+			"priceRange": seo.lang === 'it' ? "€19.99 - €49.99" : "$19.99 - $49.99",
+			"address": {
+				"@type": "PostalAddress",
+				"addressCountry": seo.lang === 'it' ? "IT" : "US"
+			},
+			"offers": {
+				"@type": "Offer",
+				"url": siteUrl,
+				"priceCurrency": seo.lang === 'it' ? "EUR" : "USD",
+				"availability": "https://schema.org/InStock",
+				"itemOffered": {
+					"@type": "Product",
+					"name": seo.lang === 'it' ? "Abbigliamento Personalizzato" : "Custom Clothing",
+					"description": seo.lang === 'it' ? "T-shirt personalizzate, felpe, camicie, tazze e abbigliamento su misura" : "Personalized T-shirts, hoodies, shirts, mugs, and custom apparel"
+				}
+			}
+		})} />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			:root {
+				--bg-color: #f5f5dc;
+				--primary-color: #000000;
+				--accent-color: #ff006e;
+				--border-thick: 4px;
+				--shadow-offset: 8px;
+			}
+
+			
+
+			body {
+				font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+				background-color: var(--bg-color);
+				color: var(--primary-color);
+				line-height: 1.6;
+				min-height: 100vh;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+
+			/* Header */
+			header {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 30px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.logo-section {
+				display: flex;
+				align-items: center;
+				gap: 20px;
+				flex-wrap: wrap;
+			}
+
+			.logo {
+				max-width: 150px;
+				height: auto;
+				border: var(--border-thick) solid var(--primary-color);
+			}
+
+			h1 {
+				font-size: 3rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: -2px;
+			}
+
+			/* Hero Section */
+			.hero {
+				border: var(--border-thick) solid var(--primary-color);
+				background: var(--accent-color);
+				color: white;
+				padding: 60px 40px;
+				margin-bottom: 40px;
+				text-align: center;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.hero h1 {
+				font-size: 2.5rem;
+				margin-bottom: 20px;
+				font-weight: 900;
+			}
+
+			.hero p {
+				font-size: 1.3rem;
+				font-weight: bold;
+			}
+
+			/* Product Gallery */
+			.product-gallery {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+				gap: 30px;
+				margin-bottom: 60px;
+			}
+
+			.product-item {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 20px;
+				text-align: center;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+				transition: transform 0.2s;
+			}
+
+			.product-item:hover {
+				transform: translate(-2px, -2px);
+				box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--primary-color);
+			}
+
+			.product-item img {
+				width: 100%;
+				max-width: 180px;
+				height: auto;
+				border: var(--border-thick) solid var(--primary-color);
+				margin-bottom: 15px;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.product-item h3 {
+				font-size: 1.5rem;
+				font-weight: 900;
+				text-transform: uppercase;
+			}
+
+			/* Testimonials Section */
+			.testimonials-section {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 40px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.testimonials-section h2 {
+				font-size: 2rem;
+				margin-bottom: 30px;
+				text-transform: uppercase;
+				font-weight: 900;
+				text-align: center;
+			}
+
+			.testimonials-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 30px;
+			}
+
+			.testimonial-card {
+				border: var(--border-thick) solid var(--primary-color);
+				background: var(--bg-color);
+				padding: 30px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+				transition: transform 0.2s;
+			}
+
+			.testimonial-card:hover {
+				transform: translate(-2px, -2px);
+				box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--primary-color);
+			}
+
+			.testimonial-text {
+				font-size: 1.1rem;
+				line-height: 1.6;
+				margin-bottom: 20px;
+				font-weight: bold;
+			}
+
+			.testimonial-author {
+				font-size: 1rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				color: var(--accent-color);
+			}
+
+			.testimonial-rating {
+				font-size: 1.5rem;
+				margin-bottom: 15px;
+			}
+
+			/* Order Form */
+			.order-form-section {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 40px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.order-form-section h2 {
+				font-size: 2rem;
+				margin-bottom: 30px;
+				text-transform: uppercase;
+				font-weight: 900;
+			}
+
+			.form-group {
+				margin-bottom: 25px;
+			}
+
+			.form-group label {
+				display: block;
+				font-size: 1.1rem;
+				font-weight: bold;
+				margin-bottom: 10px;
+				text-transform: uppercase;
+			}
+
+			.form-group input,
+			.form-group select,
+			.form-group textarea {
+				width: 100%;
+				padding: 15px;
+				border: var(--border-thick) solid var(--primary-color);
+				font-size: 1rem;
+				font-family: inherit;
+				font-weight: bold;
+				background: white;
+			}
+
+			.form-group input:focus,
+			.form-group select:focus,
+			.form-group textarea:focus {
+				outline: none;
+				box-shadow: inset 4px 4px 0 rgba(0, 0, 0, 0.1);
+			}
+
+			.form-group textarea {
+				resize: vertical;
+				min-height: 100px;
+			}
+
+			.file-upload-wrapper {
+				position: relative;
+				display: inline-block;
+				width: 100%;
+			}
+
+			.file-upload-wrapper input[type="file"] {
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: 100%;
+				cursor: pointer;
+			}
+
+			.file-upload-button {
+				display: inline-block;
+				padding: 15px 30px;
+				border: var(--border-thick) solid var(--primary-color);
+				background: var(--accent-color);
+				color: white;
+				font-weight: bold;
+				font-size: 1rem;
+				cursor: pointer;
+				text-transform: uppercase;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+				transition: transform 0.1s;
+			}
+
+			.file-upload-button:hover {
+				transform: translate(-2px, -2px);
+			}
+
+			.file-name {
+				margin-top: 10px;
+				font-weight: bold;
+			}
+
+			.submit-button {
+				width: 100%;
+				padding: 20px;
+				border: var(--border-thick) solid var(--primary-color);
+				background: var(--primary-color);
+				color: white;
+				font-size: 1.2rem;
+				font-weight: 900;
+				cursor: pointer;
+				text-transform: uppercase;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+				transition: transform 0.1s;
+				margin-top: 20px;
+			}
+
+			.submit-button:hover:not(:disabled) {
+				transform: translate(-2px, -2px);
+			}
+
+			.submit-button:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+
+			/* Messages */
+			.message {
+				padding: 20px;
+				margin-top: 20px;
+				border: var(--border-thick) solid var(--primary-color);
+				font-weight: bold;
+				display: none;
+			}
+
+			.message.success {
+				background: #4ade80;
+				color: var(--primary-color);
+			}
+
+			.message.error {
+				background: #f87171;
+				color: white;
+			}
+
+			.message.show {
+				display: block;
+				animation: fadeIn 0.3s;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-10px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+
+			/* Loading Spinner */
+			.spinner {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				border: 3px solid rgba(255, 255, 255, 0.3);
+				border-radius: 50%;
+				border-top-color: white;
+				animation: spin 0.8s linear infinite;
+				margin-right: 10px;
+				vertical-align: middle;
+			}
+
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			/* Navigation */
+			nav {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 20px 30px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			nav ul {
+				list-style: none;
+				display: flex;
+				gap: 30px;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			nav a {
+				color: var(--primary-color);
+				text-decoration: none;
+				font-size: 1.2rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				transition: color 0.2s;
+			}
+
+			nav a:hover {
+				color: var(--accent-color);
+			}
+
+			/* About Section */
+			.about-section {
+				border: var(--border-thick) solid var(--primary-color);
+				background: white;
+				padding: 50px 40px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.about-section h2 {
+				font-size: 2rem;
+				margin-bottom: 20px;
+				text-transform: uppercase;
+				font-weight: 900;
+				text-align: center;
+			}
+
+			.about-section p {
+				font-size: 1.1rem;
+				line-height: 1.8;
+				margin-bottom: 15px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			/* Features Section */
+			.features-section {
+				border: var(--border-thick) solid var(--primary-color);
+				background: var(--accent-color);
+				color: white;
+				padding: 50px 40px;
+				margin-bottom: 40px;
+				box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--primary-color);
+			}
+
+			.features-section h2 {
+				font-size: 2rem;
+				margin-bottom: 30px;
+				text-transform: uppercase;
+				font-weight: 900;
+				text-align: center;
+			}
+
+			.features-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				gap: 30px;
+			}
+
+			.feature-card {
+				border: var(--border-thick) solid white;
+				background: rgba(255, 255, 255, 0.1);
+				padding: 30px;
+				text-align: center;
+			}
+
+			.feature-card h3 {
+				font-size: 1.5rem;
+				margin-bottom: 15px;
+				text-transform: uppercase;
+				font-weight: 900;
+			}
+
+			.feature-card p {
+				font-size: 1rem;
+				line-height: 1.6;
+				font-weight: bold;
+			}
+
+			/* Pricing Section */
+			.pricing-note {
+				border: var(--border-thick) solid var(--accent-color);
+				background: white;
+				padding: 20px;
+				margin-bottom: 25px;
+				box-shadow: 4px 4px 0 var(--accent-color);
+			}
+
+			.pricing-note h3 {
+				font-size: 1.3rem;
+				margin-bottom: 15px;
+				text-transform: uppercase;
+				font-weight: 900;
+				color: var(--accent-color);
+			}
+
+			.pricing-note p {
+				font-size: 1rem;
+				line-height: 1.6;
+				font-weight: bold;
+				margin-bottom: 10px;
+			}
+
+			.price-display {
+				font-size: 1.5rem;
+				font-weight: 900;
+				color: var(--accent-color);
+				margin-top: 10px;
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				h1 {
+					font-size: 2rem;
+				}
+
+				.hero h1 {
+					font-size: 1.8rem;
+				}
+
+				.product-gallery {
+					grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+				}
+
+				nav ul {
+					flex-direction: column;
+					gap: 15px;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<div class="container">
+			<header>
+				<div class="logo-section">
+					<img src={logoImage.src} alt="Snaphalagulus Custom Clothing Logo - Personalized T-Shirts, Hoodies, and Apparel" class="logo" width={logoImage.width} height={logoImage.height} />
+					<h1>Snaphalagulus</h1>
+				</div>
+			</header>
+
+			<nav>
+				<ul>
+					<li><a href="/">{t.nav.home}</a></li>
+					<li><a href="/blog">{t.nav.blog}</a></li>
+					<li class="language-switcher">
+						<button id="lang-en" data-lang="en">EN</button>
+						<button id="lang-it" data-lang="it">IT</button>
+					</li>
+				</ul>
+			</nav>
+
+			<section class="hero">
+				<h1>{t.hero.title}</h1>
+				<p>{t.hero.subtitle}</p>
+			</section>
+
+			<section class="product-gallery" aria-label={currentLang === 'it' ? 'I Nostri Prodotti' : 'Our Products'}>
+				<article class="product-item">
+					<img src={tshirtImage.src} alt={currentLang === 'it' ? 'T-Shirt Personalizzata - Stampa il Tuo Design o Testo' : 'Custom Personalized T-Shirt - Print Your Own Design or Text'} width={tshirtImage.width} height={tshirtImage.height} />
+					<h3>{t.products.tshirt}</h3>
+				</article>
+				<article class="product-item">
+					<img src={hoodieImage.src} alt={currentLang === 'it' ? 'Felpa Personalizzata - Felpe Personalizzate di Qualità Premium' : 'Custom Personalized Hoodie - Premium Quality Custom Hoodies'} width={hoodieImage.width} height={hoodieImage.height} />
+					<h3>{t.products.hoodie}</h3>
+				</article>
+				<article class="product-item">
+					<img src={shirtImage.src} alt={currentLang === 'it' ? 'Camicia Personalizzata - Stampa Camicie Personalizzate di Qualità' : 'Custom Personalized Shirt - Quality Custom Shirt Printing'} width={shirtImage.width} height={shirtImage.height} />
+					<h3>{t.products.shirt}</h3>
+				</article>
+				<article class="product-item">
+					<img src={mugImage.src} alt={currentLang === 'it' ? 'Tazza Personalizzata - Stampa il Tuo Design sulle Tazze' : 'Custom Personalized Mug - Print Your Own Design on Mugs'} width={mugImage.width} height={mugImage.height} />
+					<h3>{t.products.mug}</h3>
+				</article>
+			</section>
+
+			<section class="about-section" aria-label={currentLang === 'it' ? 'Chi Siamo' : 'About Us'}>
+				<h2>{t.about.title}</h2>
+				<p>{t.about.text1}</p>
+				<p>{t.about.text2}</p>
+			</section>
+
+			<section class="features-section">
+				<h2>{t.features.title}</h2>
+				<div class="features-grid">
+					<div class="feature-card">
+						<h3>{t.features.premium.title}</h3>
+						<p>{t.features.premium.desc}</p>
+					</div>
+					<div class="feature-card">
+						<h3>{t.features.custom.title}</h3>
+						<p>{t.features.custom.desc}</p>
+					</div>
+					<div class="feature-card">
+						<h3>{t.features.fast.title}</h3>
+						<p>{t.features.fast.desc}</p>
+					</div>
+					<div class="feature-card">
+						<h3>{t.features.gifts.title}</h3>
+						<p>{t.features.gifts.desc}</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="testimonials-section">
+				<h2>{t.testimonials.title}</h2>
+				<div class="testimonials-grid">
+					<div class="testimonial-card">
+						<div class="testimonial-rating">★★★★★</div>
+						<p class="testimonial-text">
+							"Amazing quality! The custom text came out exactly as I wanted. Fast shipping and great customer service. Will definitely order again!"
+						</p>
+						<div class="testimonial-author">— Sarah M.</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-rating">★★★★★</div>
+						<p class="testimonial-text">
+							"Love my new hoodie! The fabric is super soft and the print quality is outstanding. Best custom clothing I've ever purchased!"
+						</p>
+						<div class="testimonial-author">— Mike T.</div>
+					</div>
+					<div class="testimonial-card">
+						<div class="testimonial-rating">★★★★★</div>
+						<p class="testimonial-text">
+							"The whole process was smooth and easy. My logo looks perfect on the shirt! Highly recommend Snaphalagulus for all your custom needs."
+						</p>
+						<div class="testimonial-author">— Jessica L.</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="order-form-section">
+				<h2>{t.order.title}</h2>
+				<div class="pricing-note">
+					<h3>{t.order.pricing}</h3>
+					<p><strong>{t.products.tshirt}:</strong> {currentLang === 'it' ? '€29.99' : '$29.99'} | <strong>{t.products.hoodie}:</strong> {currentLang === 'it' ? '€49.99' : '$49.99'} | <strong>{t.products.shirt}:</strong> {currentLang === 'it' ? '€34.99' : '$34.99'}</p>
+					<p><strong>{t.products.mug}:</strong> {currentLang === 'it' ? '€19.99' : '$19.99'} | <strong>{t.products.cap}:</strong> {currentLang === 'it' ? '€24.99' : '$24.99'} | <strong>{t.products.other}:</strong> {currentLang === 'it' ? 'A partire da €19.99' : 'Starting at $19.99'}</p>
+					<p class="price-display" id="selected-price" data-text-default={t.order.selectPrice}>{t.order.selectPrice}</p>
+					<p style="margin-top: 15px; font-size: 0.95rem;">
+						<strong>{currentLang === 'it' ? 'Nota:' : 'Note:'}</strong> {t.order.note}
+					</p>
+				</div>
+				<form id="order-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="name">{t.order.name} *</label>
+						<input type="text" id="name" name="name" required />
+					</div>
+
+					<div class="form-group">
+						<label for="email">{t.order.email} *</label>
+						<input type="email" id="email" name="email" required />
+					</div>
+
+					<div class="form-group">
+						<label for="clothing-type">{t.order.clothingType} *</label>
+						<select id="clothing-type" name="clothingType" required>
+							<option value="">{t.order.selectType}</option>
+							<option value="T-Shirt">{t.products.tshirt}</option>
+							<option value="Hoodie">{t.products.hoodie}</option>
+							<option value="Shirt">{t.products.shirt}</option>
+							<option value="Mug">{t.products.mug}</option>
+							<option value="Cap">{t.products.cap}</option>
+							<option value="Other">{t.products.other}</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="custom-text">{t.order.customText}</label>
+						<textarea id="custom-text" name="customText" placeholder={t.order.textPlaceholder}></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="image">{t.order.image}</label>
+						<div class="file-upload-wrapper">
+							<input type="file" id="image" name="image" accept="image/*" />
+							<div class="file-upload-button">{t.order.chooseFile}</div>
+						</div>
+						<div class="file-name" id="file-name"></div>
+					</div>
+
+					<button type="submit" class="submit-button" id="submit-btn">
+						{t.order.submit}
+					</button>
+
+					<div class="message success" id="success-message">
+						{t.order.success}
+					</div>
+
+					<div class="message error" id="error-message">
+						{t.order.error}
+					</div>
+				</form>
+			</section>
+		</div>
+
+		<script>
+			// Language detection and switching
+			(function() {
+				const storedLang = localStorage.getItem('preferredLanguage');
+				const html = document.documentElement;
+				
+				// Update HTML lang attribute if language is stored
+				if (storedLang && (storedLang === 'en' || storedLang === 'it')) {
+					html.lang = storedLang;
+					html.setAttribute('data-lang', storedLang);
+				}
+			})();
+			
+			// Language switcher
+			document.addEventListener('DOMContentLoaded', () => {
+				// Get current language from localStorage or default to 'en'
+				const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+				
+				// Update language switcher active state immediately
+				const langButtons = document.querySelectorAll('[data-lang]');
+				langButtons.forEach(button => {
+					const btn = button as HTMLElement;
+					const lang = btn.dataset.lang;
+					if (lang === currentLanguage) {
+						btn.classList.add('active');
+					} else {
+						btn.classList.remove('active');
+					}
+					
+					// Language switcher click handler
+					btn.addEventListener('click', (e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						const newLang = btn.dataset.lang;
+						if (newLang && (newLang === 'en' || newLang === 'it')) {
+							localStorage.setItem('preferredLanguage', newLang);
+							window.location.reload();
+						}
+					});
+				});
+
+				// Price display update
+				const clothingTypeSelect = document.getElementById('clothing-type') as HTMLSelectElement | null;
+				const selectedPriceDisplay = document.getElementById('selected-price');
+				
+				if (clothingTypeSelect && selectedPriceDisplay) {
+					const prices: Record<string, Record<string, string>> = {
+						en: {
+							'T-Shirt': '$29.99',
+							'Hoodie': '$49.99',
+							'Shirt': '$34.99',
+							'Mug': '$19.99',
+							'Cap': '$24.99',
+							'Other': 'Starting at $19.99'
+						},
+						it: {
+							'T-Shirt': '€29.99',
+							'Hoodie': '€49.99',
+							'Shirt': '€34.99',
+							'Mug': '€19.99',
+							'Cap': '€24.99',
+							'Other': 'A partire da €19.99'
+						}
+					};
+					
+					const lang = localStorage.getItem('preferredLanguage') || currentLanguage || 'en';
+					const priceData = prices[lang] || prices.en;
+
+					clothingTypeSelect.addEventListener('change', (e) => {
+						const target = e.target as HTMLSelectElement;
+						const selectedType = target.value;
+						const translations_text = {
+							en: { selected: 'Selected' },
+							it: { selected: 'Selezionato' }
+						};
+						const selectedText = translations_text[lang as keyof typeof translations_text]?.selected || 'Selected';
+						
+						if (selectedType && priceData[selectedType]) {
+							selectedPriceDisplay.textContent = `${selectedText}: ${selectedType} - ${priceData[selectedType]}`;
+						} else {
+							const defaultText = selectedPriceDisplay.dataset.textDefault || 'Select a clothing type to see price';
+							selectedPriceDisplay.textContent = defaultText;
+						}
+					});
+				}
+			});
+
+			// File upload display
+			const fileInput = document.getElementById('image');
+			const fileName = document.getElementById('file-name');
+
+				if (fileInput && fileName) {
+					const translations = {
+						en: {
+							selected: 'Selected',
+							fileTooLarge: 'File too large! Maximum size is 5MB.',
+							mb: 'MB'
+						},
+						it: {
+							selected: 'Selezionato',
+							fileTooLarge: 'File troppo grande! La dimensione massima è 5MB.',
+							mb: 'MB'
+						}
+					};
+					
+					const lang = localStorage.getItem('preferredLanguage') || 'en';
+					const t = translations[lang as keyof typeof translations] || translations.en;
+					
+					fileInput.addEventListener('change', (e) => {
+						const target = e.target as HTMLInputElement;
+						const file = target.files?.[0];
+						if (file) {
+							fileName.textContent = `${t.selected}: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} ${t.mb})`;
+							
+							// Check file size
+							if (file.size > 5 * 1024 * 1024) {
+								fileName.textContent = t.fileTooLarge;
+								fileName.style.color = '#f87171';
+								target.value = '';
+								return;
+							}
+							fileName.style.color = 'inherit';
+						} else {
+							fileName.textContent = '';
+						}
+					});
+				}
+
+			// Form submission
+			const orderForm = document.getElementById('order-form') as HTMLFormElement | null;
+			const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+			const successMessage = document.getElementById('success-message') as HTMLElement | null;
+			const errorMessage = document.getElementById('error-message') as HTMLElement | null;
+
+			if (!orderForm || !submitBtn || !successMessage || !errorMessage) {
+				console.error('Form elements not found');
+				return;
+			}
+
+			function showMessage(isError: boolean) {
+				if (!successMessage || !errorMessage) return;
+				successMessage.classList.remove('show');
+				errorMessage.classList.remove('show');
+				
+				if (isError) {
+					errorMessage.classList.add('show');
+				} else {
+					successMessage.classList.add('show');
+				}
+			}
+
+			function hideMessages() {
+				if (!successMessage || !errorMessage) return;
+				successMessage.classList.remove('show');
+				errorMessage.classList.remove('show');
+			}
+
+			orderForm.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				hideMessages();
+
+				// Disable submit button
+				submitBtn.disabled = true;
+				submitBtn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+				const formData = new FormData(orderForm);
+
+				try {
+					const response = await fetch('/api/order', {
+						method: 'POST',
+						body: formData,
+					});
+
+					const data = await response.json();
+
+					if (response.ok) {
+						showMessage(false);
+						orderForm.reset();
+						if (fileName) fileName.textContent = '';
+					} else {
+						showMessage(true);
+						if (data.error && errorMessage) {
+							errorMessage.textContent = data.error;
+						}
+					}
+				} catch (error) {
+					showMessage(true);
+					if (errorMessage) {
+						errorMessage.textContent = 'Network error. Please check your connection and try again.';
+					}
+				} finally {
+					submitBtn.disabled = false;
+					submitBtn.innerHTML = 'Submit Order';
+				}
+			});
+		</script>
 	</body>
 </html>
