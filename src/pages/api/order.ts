@@ -214,3 +214,26 @@ export const POST: APIRoute = async ({ request }) => {
 		});
 	}
 };
+
+// Provide a basic GET so the route doesn't 404 if probed in production
+export const GET: APIRoute = async () => {
+    return new Response(
+        JSON.stringify({ ok: true, message: 'Endpoint attivo. Usa POST per inviare un ordine.' }),
+        {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        }
+    );
+};
+
+// Handle OPTIONS (in case of preflight in some setups)
+export const OPTIONS: APIRoute = async () => {
+    return new Response(null, {
+        status: 204,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type',
+        },
+    });
+};
