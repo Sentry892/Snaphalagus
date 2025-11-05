@@ -3,63 +3,47 @@
 import logoImage from '../assets/snaphalagus_logo-removebg-preview.png';
 
 const siteUrl = 'https://snaphalagulus.eu';
-const defaultLang = 'en';
-
-// SEO data for both languages
-const seoData: Record<string, { title: string; description: string; keywords: string; lang: string }> = {
-	en: {
-		title: 'Blog - Snaphalagulus | Gift Ideas & Present Inspiration',
-		description: 'Discover the best personalized gift ideas and present inspiration. Learn why custom clothing makes perfect gifts for birthdays, holidays, anniversaries, and special occasions.',
-		keywords: 'gift ideas, personalized gifts, present ideas, custom gift ideas, birthday gifts, holiday gifts, anniversary gifts, graduation gifts, corporate gifts, custom clothing gifts',
-		lang: 'en'
-	},
-	it: {
-		title: 'Blog - Snaphalagulus | Idee Regalo e Ispirazione per Regali',
-		description: 'Scopri le migliori idee regalo personalizzate e ispirazione per regali. Scopri perché l\'abbigliamento personalizzato è perfetto per compleanni, feste, anniversari e occasioni speciali.',
-		keywords: 'idee regalo, regali personalizzati, idee per regali, regali personalizzati, regali compleanno, regali feste, regali anniversario, regali laurea, regali aziendali, regali abbigliamento personalizzato',
-		lang: 'it'
-	}
+const seo = {
+    title: 'Blog - Snaphalagulus | Idee Regalo e Ispirazione',
+    description:
+        "Scopri le migliori idee regalo personalizzate e perché l'abbigliamento personalizzato è perfetto per ogni occasione.",
+    keywords:
+        'idee regalo, regali personalizzati, idee per regali, regali compleanno, regali feste, regali anniversario, regali laurea, regali aziendali, abbigliamento personalizzato',
+    lang: 'it'
 };
-
-const currentLang = defaultLang as 'en' | 'it';
-const seo = seoData[currentLang];
 ---
 
-<html lang={seo.lang} data-lang={currentLang}>
+<html lang={seo.lang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- Primary Meta Tags -->
-		<title>{seo.title}</title>
-		<meta name="title" content={seo.title} />
+        <title>{seo.title}</title>
+        <meta name="title" content={seo.title} />
 		<meta name="description" content={seo.description} />
 		<meta name="keywords" content={seo.keywords} />
 		<meta name="robots" content="index, follow" />
-		<meta name="language" content={seo.lang === 'it' ? 'Italian' : 'English'} />
+        <meta name="language" content="Italian" />
 		<meta name="author" content="Snaphalagulus" />
-		
-		<!-- Alternate Languages -->
-		<link rel="alternate" hreflang="en" href={`${siteUrl}/blog`} />
-		<link rel="alternate" hreflang="it" href={`${siteUrl}/blog`} />
-		<link rel="alternate" hreflang="x-default" href={`${siteUrl}/blog`} />
+        
+        <link rel="alternate" hreflang="it" href={`${siteUrl}/blog`} />
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={`${siteUrl}/blog`} />
-		<meta property="og:title" content={seo.title} />
-		<meta property="og:description" content={seo.description} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
 		<meta property="og:image" content={`${siteUrl}${logoImage.src}`} />
 		<meta property="og:site_name" content="Snaphalagulus" />
-		<meta property="og:locale" content={seo.lang === 'it' ? 'it_IT' : 'en_US'} />
-		<meta property="og:locale:alternate" content={seo.lang === 'it' ? 'en_US' : 'it_IT'} />
+        <meta property="og:locale" content="it_IT" />
 		
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={`${siteUrl}/blog`} />
-		<meta property="twitter:title" content={seo.title} />
-		<meta property="twitter:description" content={seo.description} />
+        <meta property="twitter:title" content={seo.title} />
+        <meta property="twitter:description" content={seo.description} />
 		<meta property="twitter:image" content={`${siteUrl}${logoImage.src}`} />
 		
 		<!-- Favicon -->
@@ -70,10 +54,10 @@ const seo = seoData[currentLang];
 		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "Blog",
-			"name": seo.lang === 'it' ? "Blog Snaphalagulus" : "Snaphalagulus Blog",
+            "name": "Blog Snaphalagulus",
 			"description": seo.description,
 			"url": `${siteUrl}/blog`,
-			"inLanguage": seo.lang,
+            "inLanguage": "it",
 			"publisher": {
 				"@type": "Organization",
 				"name": "Snaphalagulus",
@@ -314,118 +298,114 @@ const seo = seoData[currentLang];
 				</div>
 			</header>
 
-			<nav>
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="/blog">Blog</a></li>
-					<li class="language-switcher">
-						<button id="lang-en" data-lang="en">EN</button>
-						<button id="lang-it" data-lang="it">IT</button>
-					</li>
-				</ul>
-			</nav>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </nav>
 
-			<section class="blog-header">
-				<h2>Gift Ideas & Present Inspiration</h2>
-				<p>Discover the perfect personalized gifts for every occasion</p>
-			</section>
+            <section class="blog-header">
+                <h2>Idee Regalo e Ispirazione</h2>
+                <p>Scopri i regali personalizzati perfetti per ogni occasione</p>
+            </section>
 
 			<section class="blog-posts">
-				<article class="blog-card">
-					<h3>Why Personalized Gifts Make the Best Presents</h3>
-					<div class="blog-date">December 15, 2024</div>
-					<p>
-						Personalized gifts show that you've put thought and effort into choosing something special. Custom clothing with names, dates, or meaningful quotes creates a unique connection between the giver and receiver. Unlike generic presents, personalized items tell a story and create lasting memories.
-					</p>
-					<p>
-						Whether it's a birthday, anniversary, graduation, or holiday celebration, a custom T-shirt or hoodie with a personal touch makes any gift recipient feel truly special. The best part? They'll treasure it for years to come!
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Gift Ideas</span>
-						<span class="blog-tag">Personalization</span>
-						<span class="blog-tag">Holidays</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Perché i Regali Personalizzati sono i Migliori</h3>
+                    <div class="blog-date">15 Dicembre 2024</div>
+                    <p>
+                        I regali personalizzati dimostrano attenzione e cura nella scelta di qualcosa di speciale. L’abbigliamento personalizzato con nomi, date o frasi significative crea un legame unico tra chi dona e chi riceve. A differenza dei regali generici, gli articoli personalizzati raccontano una storia e creano ricordi duraturi.
+                    </p>
+                    <p>
+                        Che sia un compleanno, un anniversario, una laurea o una festa, una T‑shirt o una felpa personalizzata con un tocco personale fa sentire davvero speciale chi la riceve. Il bello? Sarà un ricordo da custodire per anni!
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Idee Regalo</span>
+                        <span class="blog-tag">Personalizzazione</span>
+                        <span class="blog-tag">Feste</span>
+                    </div>
+                </article>
 
-				<article class="blog-card">
-					<h3>Perfect Holiday Presents: Custom Clothing Edition</h3>
-					<div class="blog-date">December 10, 2024</div>
-					<p>
-						The holiday season is all about giving meaningful presents to the people you love. Custom clothing has become one of the most popular gift choices because it combines practicality with personalization. Imagine gifting someone a cozy hoodie with their favorite quote or a family photo printed on it!
-					</p>
-					<p>
-						From Christmas mornings to New Year's celebrations, custom T-shirts and mugs make wonderful presents that show you care. They're perfect for family members, friends, or even as corporate gifts for your team. Plus, custom items are always in style!
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Holidays</span>
-						<span class="blog-tag">Custom Gifts</span>
-						<span class="blog-tag">Seasonal</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Regali di Natale Perfetti: Edizione Abbigliamento Personalizzato</h3>
+                    <div class="blog-date">10 Dicembre 2024</div>
+                    <p>
+                        Il periodo natalizio è il momento ideale per donare qualcosa di significativo alle persone che ami. L’abbigliamento personalizzato è una delle scelte più popolari perché unisce utilità e personalizzazione. Immagina di regalare una felpa calda con la loro frase preferita o una foto di famiglia stampata!
+                    </p>
+                    <p>
+                        Dalla mattina di Natale al Capodanno, T‑shirt e tazze personalizzate sono regali perfetti che dimostrano attenzione. Ideali per familiari, amici e anche come regali aziendali per il tuo team. E gli articoli personalizzati non passano mai di moda!
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Feste</span>
+                        <span class="blog-tag">Regali Personalizzati</span>
+                        <span class="blog-tag">Stagionali</span>
+                    </div>
+                </article>
 
-				<article class="blog-card">
-					<h3>Birthday Present Ideas That Actually Stand Out</h3>
-					<div class="blog-date">December 5, 2024</div>
-					<p>
-						Tired of giving the same old birthday presents? Custom clothing is the answer! A personalized shirt with the birthday person's name, age, or a funny inside joke will definitely make their special day even more memorable.
-					</p>
-					<p>
-						The beauty of custom presents is that they're completely unique. You can design something that perfectly matches the recipient's personality, style, and interests. Whether they're into sports, music, art, or humor, there's a custom design that will make them smile!
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Birthdays</span>
-						<span class="blog-tag">Unique Gifts</span>
-						<span class="blog-tag">Celebrations</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Idee Regalo di Compleanno che Fanno Davvero Colpo</h3>
+                    <div class="blog-date">5 Dicembre 2024</div>
+                    <p>
+                        Stanco dei soliti regali di compleanno? L’abbigliamento personalizzato è la risposta! Una maglietta con il nome, l’età o una battuta interna renderà il loro giorno ancora più speciale.
+                    </p>
+                    <p>
+                        Il bello dei regali personalizzati è che sono davvero unici. Puoi creare qualcosa che rispecchia perfettamente la personalità, lo stile e gli interessi del destinatario: sport, musica, arte o humor, c’è sempre un design giusto per farli sorridere!
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Compleanni</span>
+                        <span class="blog-tag">Regali Unici</span>
+                        <span class="blog-tag">Festeggiamenti</span>
+                    </div>
+                </article>
 
-				<article class="blog-card">
-					<h3>Corporate Gifts: Personalized Apparel for Your Team</h3>
-					<div class="blog-date">November 28, 2024</div>
-					<p>
-						Looking for the perfect company gifts for your employees or clients? Custom branded clothing is an excellent choice for corporate presents. Custom T-shirts, hoodies, or mugs with your company logo or a team slogan build unity and brand awareness.
-					</p>
-					<p>
-						Corporate gifts don't have to be boring! Personalized apparel shows appreciation while creating a sense of belonging. They're perfect for team building events, company anniversaries, or as thank-you presents for valued clients.
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Corporate</span>
-						<span class="blog-tag">Business</span>
-						<span class="blog-tag">Team Building</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Regali Aziendali: Abbigliamento Personalizzato per il Tuo Team</h3>
+                    <div class="blog-date">28 Novembre 2024</div>
+                    <p>
+                        Cerchi il regalo aziendale perfetto per dipendenti o clienti? L’abbigliamento brandizzato è un’ottima scelta: T‑shirt, felpe o tazze con il logo o uno slogan del team aumentano appartenenza e notorietà del brand.
+                    </p>
+                    <p>
+                        I regali aziendali non devono essere noiosi! I capi personalizzati dimostrano apprezzamento e creano senso di squadra. Perfetti per team building, anniversari aziendali o come ringraziamento ai clienti.
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Aziende</span>
+                        <span class="blog-tag">Business</span>
+                        <span class="blog-tag">Team Building</span>
+                    </div>
+                </article>
 
-				<article class="blog-card">
-					<h3>Anniversary Gifts: Creating Custom Memories</h3>
-					<div class="blog-date">November 20, 2024</div>
-					<p>
-						Anniversary presents should celebrate the memories you've shared together. Custom clothing with your wedding date, a meaningful quote, or even a map of where you first met makes for a truly romantic and thoughtful gift.
-					</p>
-					<p>
-						Whether it's your first anniversary or your 50th, custom T-shirts or hoodies can commemorate your special day in a unique way. Matching his-and-hers designs are also incredibly popular for couples who want to show their connection!
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Anniversaries</span>
-						<span class="blog-tag">Romance</span>
-						<span class="blog-tag">Special Occasions</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Regali di Anniversario: Crea Ricordi Personalizzati</h3>
+                    <div class="blog-date">20 Novembre 2024</div>
+                    <p>
+                        I regali di anniversario dovrebbero celebrare i ricordi condivisi. L’abbigliamento personalizzato con la data del matrimonio, una frase significativa o persino la mappa del primo incontro è un’idea romantica e speciale.
+                    </p>
+                    <p>
+                        Che sia il primo anniversario o il cinquantesimo, T‑shirt e felpe personalizzate possono commemorare la vostra giornata in modo unico. Anche i design coordinati di coppia sono amatissimi!
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Anniversari</span>
+                        <span class="blog-tag">Romantici</span>
+                        <span class="blog-tag">Occasioni Speciali</span>
+                    </div>
+                </article>
 
-				<article class="blog-card">
-					<h3>Graduation Presents: Celebrate Their Achievement</h3>
-					<div class="blog-date">November 15, 2024</div>
-					<p>
-						Graduation is a major milestone worth celebrating with a special present! Custom clothing with the graduate's name, graduation year, or school logo makes a meaningful gift they'll appreciate for years to come.
-					</p>
-					<p>
-						From high school to college graduations, personalized hoodies and T-shirts are perfect presents that celebrate achievement while being practical for everyday wear. They're especially popular among graduates who want to remember their alma mater!
-					</p>
-					<div class="blog-tags">
-						<span class="blog-tag">Graduation</span>
-						<span class="blog-tag">Education</span>
-						<span class="blog-tag">Milestones</span>
-					</div>
-				</article>
+                <article class="blog-card">
+                    <h3>Regali di Laurea: Festeggia il Traguardo</h3>
+                    <div class="blog-date">15 Novembre 2024</div>
+                    <p>
+                        La laurea è un traguardo importante da celebrare con un regalo speciale! L’abbigliamento personalizzato con nome, anno di laurea o logo dell’ateneo è un dono significativo che verrà apprezzato nel tempo.
+                    </p>
+                    <p>
+                        Dalle scuole superiori all’università, felpe e T‑shirt personalizzate sono regali perfetti: celebrano il risultato e sono pratiche per l’uso quotidiano. Molto amate da chi vuole ricordare la propria alma mater!
+                    </p>
+                    <div class="blog-tags">
+                        <span class="blog-tag">Laurea</span>
+                        <span class="blog-tag">Istruzione</span>
+                        <span class="blog-tag">Traguardi</span>
+                    </div>
+                </article>
 			</section>
 		</div>
 
@@ -456,17 +436,9 @@ const seo = seoData[currentLang];
 					} else {
 						btn.classList.remove('active');
 					}
+					//remove the language switcher buttons and functionality
+					btn.remove();
 					
-					// Language switcher click handler
-					btn.addEventListener('click', (e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						const newLang = btn.dataset.lang;
-						if (newLang && (newLang === 'en' || newLang === 'it')) {
-							localStorage.setItem('preferredLanguage', newLang);
-							window.location.reload();
-						}
-					});
 				});
 			});
 		</script>

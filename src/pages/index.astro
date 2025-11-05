@@ -5,36 +5,18 @@ import tshirtImage from '../assets/t-shirt.png';
 import hoodieImage from '../assets/hoodie.png';
 import shirtImage from '../assets/shirt.png';
 import mugImage from '../assets/mug.png';
-import { translations } from '../i18n/translations';
-
 const siteUrl = 'https://snaphalagulus.eu';
-const defaultLang = 'en';
-
-// SEO data for both languages
-const seoData: Record<string, { title: string; description: string; keywords: string; lang: string }> = {
-	en: {
-		title: 'Snaphalagulus - Custom Clothing & Personalized Apparel',
-		description: 'Order custom T-shirts, hoodies, mugs, and more with your personalized designs. Premium quality custom clothing and apparel. Perfect for gifts and special occasions.',
-		keywords: 'custom clothing, personalized t-shirts, custom hoodies, custom apparel, personalized gifts, custom mugs, custom shirts, personalized clothing, custom printing, t-shirt printing, hoodie printing',
-		lang: 'en'
-	},
-	it: {
-		title: 'Snaphalagulus - Abbigliamento Personalizzato e Abbigliamento su Misura',
-		description: 'Ordina T-shirt personalizzate, felpe, tazze e altro ancora con i tuoi design personalizzati. Abbigliamento personalizzato e capi di qualità premium. Perfetto per regali e occasioni speciali.',
-		keywords: 'abbigliamento personalizzato, t-shirt personalizzate, felpe personalizzate, abbigliamento su misura, regali personalizzati, tazze personalizzate, camicie personalizzate, stampa personalizzata, stampa t-shirt, stampa felpe',
-		lang: 'it'
-	}
+const seo = {
+    title: 'Snaphalagulus - Abbigliamento Personalizzato e Regali Unici',
+    description:
+        'Ordina T-shirt, felpe, camicie e tazze personalizzate con i tuoi design. Qualità premium, perfetto per regali e occasioni speciali.',
+    keywords:
+        'abbigliamento personalizzato, t-shirt personalizzate, felpe personalizzate, regali personalizzati, stampa t-shirt, stampa felpe, camicie personalizzate, tazze personalizzate',
+    lang: 'it'
 };
-
-// Get language from default (for SSR, will use defaultLang)
-// Client-side will read from localStorage
-const currentLang = defaultLang as 'en' | 'it';
-
-const seo = seoData[currentLang];
-const t = translations[currentLang];
 ---
 
-<html lang={seo.lang} data-lang={currentLang}>
+<html lang={seo.lang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,13 +28,11 @@ const t = translations[currentLang];
 		<meta name="description" content={seo.description} />
 		<meta name="keywords" content={seo.keywords} />
 		<meta name="robots" content="index, follow" />
-		<meta name="language" content={seo.lang === 'it' ? 'Italian' : 'English'} />
+        <meta name="language" content="Italian" />
 		<meta name="author" content="Snaphalagulus" />
 		
-		<!-- Alternate Languages -->
-		<link rel="alternate" hreflang="en" href={siteUrl} />
-		<link rel="alternate" hreflang="it" href={siteUrl} />
-		<link rel="alternate" hreflang="x-default" href={siteUrl} />
+        <!-- Lingua -->
+        <link rel="alternate" hreflang="it" href={siteUrl} />
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
@@ -61,8 +41,7 @@ const t = translations[currentLang];
 		<meta property="og:description" content={seo.description} />
 		<meta property="og:image" content={`${siteUrl}${logoImage.src}`} />
 		<meta property="og:site_name" content="Snaphalagulus" />
-		<meta property="og:locale" content={seo.lang === 'it' ? 'it_IT' : 'en_US'} />
-		<meta property="og:locale:alternate" content={seo.lang === 'it' ? 'en_US' : 'it_IT'} />
+        <meta property="og:locale" content="it_IT" />
 		
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
@@ -76,28 +55,28 @@ const t = translations[currentLang];
 		<link rel="canonical" href={siteUrl} />
 		
 		<!-- Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify({
+        <script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@type": "ClothingStore",
 			"name": "Snaphalagulus",
-			"description": seo.description,
+            "description": seo.description,
 			"url": siteUrl,
 			"logo": `${siteUrl}${logoImage.src}`,
 			"image": `${siteUrl}${logoImage.src}`,
-			"priceRange": seo.lang === 'it' ? "€19.99 - €49.99" : "$19.99 - $49.99",
+            "priceRange": "€19.99 - €49.99",
 			"address": {
 				"@type": "PostalAddress",
-				"addressCountry": seo.lang === 'it' ? "IT" : "US"
+                "addressCountry": "IT"
 			},
 			"offers": {
 				"@type": "Offer",
 				"url": siteUrl,
-				"priceCurrency": seo.lang === 'it' ? "EUR" : "USD",
+                "priceCurrency": "EUR",
 				"availability": "https://schema.org/InStock",
 				"itemOffered": {
 					"@type": "Product",
-					"name": seo.lang === 'it' ? "Abbigliamento Personalizzato" : "Custom Clothing",
-					"description": seo.lang === 'it' ? "T-shirt personalizzate, felpe, camicie, tazze e abbigliamento su misura" : "Personalized T-shirts, hoodies, shirts, mugs, and custom apparel"
+                    "name": "Abbigliamento Personalizzato",
+                    "description": "T-shirt personalizzate, felpe, camicie, tazze e abbigliamento su misura"
 				}
 			}
 		})} />
@@ -182,6 +161,9 @@ const t = translations[currentLang];
 				font-size: 1.3rem;
 				font-weight: bold;
 			}
+
+
+            
 
 			/* Product Gallery */
 			.product-gallery {
@@ -605,71 +587,67 @@ const t = translations[currentLang];
 				</div>
 			</header>
 
-			<nav>
-				<ul>
-					<li><a href="/">{t.nav.home}</a></li>
-					<li><a href="/blog">{t.nav.blog}</a></li>
-					<li class="language-switcher">
-						<button id="lang-en" data-lang="en">EN</button>
-						<button id="lang-it" data-lang="it">IT</button>
-					</li>
-				</ul>
-			</nav>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </nav>
 
-			<section class="hero">
-				<h1>{t.hero.title}</h1>
-				<p>{t.hero.subtitle}</p>
-			</section>
+            <section class="hero">
+                <h1>Abbigliamento Personalizzato. Il Tuo Stile.</h1>
+                <p>Ordina oggi T-shirt, felpe e altro ancora personalizzati!</p>
+            </section>
 
-			<section class="product-gallery" aria-label={currentLang === 'it' ? 'I Nostri Prodotti' : 'Our Products'}>
+            <section class="product-gallery" aria-label="I Nostri Prodotti">
 				<article class="product-item">
-					<img src={tshirtImage.src} alt={currentLang === 'it' ? 'T-Shirt Personalizzata - Stampa il Tuo Design o Testo' : 'Custom Personalized T-Shirt - Print Your Own Design or Text'} width={tshirtImage.width} height={tshirtImage.height} />
-					<h3>{t.products.tshirt}</h3>
+                    <img src={tshirtImage.src} alt="T-Shirt Personalizzata - Stampa il Tuo Design o Testo" width={tshirtImage.width} height={tshirtImage.height} />
+                    <h3>T-Shirt</h3>
 				</article>
 				<article class="product-item">
-					<img src={hoodieImage.src} alt={currentLang === 'it' ? 'Felpa Personalizzata - Felpe Personalizzate di Qualità Premium' : 'Custom Personalized Hoodie - Premium Quality Custom Hoodies'} width={hoodieImage.width} height={hoodieImage.height} />
-					<h3>{t.products.hoodie}</h3>
+                    <img src={hoodieImage.src} alt="Felpa Personalizzata - Qualità Premium" width={hoodieImage.width} height={hoodieImage.height} />
+                    <h3>Felpa</h3>
 				</article>
 				<article class="product-item">
-					<img src={shirtImage.src} alt={currentLang === 'it' ? 'Camicia Personalizzata - Stampa Camicie Personalizzate di Qualità' : 'Custom Personalized Shirt - Quality Custom Shirt Printing'} width={shirtImage.width} height={shirtImage.height} />
-					<h3>{t.products.shirt}</h3>
+                    <img src={shirtImage.src} alt="Camicia Personalizzata - Stampa di Qualità" width={shirtImage.width} height={shirtImage.height} />
+                    <h3>Camicia</h3>
 				</article>
 				<article class="product-item">
-					<img src={mugImage.src} alt={currentLang === 'it' ? 'Tazza Personalizzata - Stampa il Tuo Design sulle Tazze' : 'Custom Personalized Mug - Print Your Own Design on Mugs'} width={mugImage.width} height={mugImage.height} />
-					<h3>{t.products.mug}</h3>
+                    <img src={mugImage.src} alt="Tazza Personalizzata - Stampa il Tuo Design" width={mugImage.width} height={mugImage.height} />
+                    <h3>Tazza</h3>
 				</article>
 			</section>
 
-			<section class="about-section" aria-label={currentLang === 'it' ? 'Chi Siamo' : 'About Us'}>
-				<h2>{t.about.title}</h2>
-				<p>{t.about.text1}</p>
-				<p>{t.about.text2}</p>
+            <section class="about-section" aria-label="Chi Siamo">
+                <h2>Chi Siamo - Snaphalagulus</h2>
+                <p>Siamo appassionati nella creazione di abbigliamento personalizzato che riflette il tuo stile unico. Che si tratti di una T-shirt personalizzata, una felpa comoda o un regalo speciale, diamo vita ai tuoi design con materiali e stampe di qualità premium.</p>
+                <p>Ogni ordine è realizzato a mano con cura, garantendo che i tuoi testi e immagini personalizzati siano stampati con precisione e durata. Crediamo che l'abbigliamento dovrebbe essere un'espressione di chi sei.</p>
 			</section>
 
-			<section class="features-section">
-				<h2>{t.features.title}</h2>
+            <section class="features-section">
+                <h2>Perché Sceglierci?</h2>
 				<div class="features-grid">
 					<div class="feature-card">
-						<h3>{t.features.premium.title}</h3>
-						<p>{t.features.premium.desc}</p>
+                        <h3>Qualità Premium</h3>
+                        <p>Tessuti di alta qualità e tecniche di stampa professionali per risultati duraturi.</p>
 					</div>
 					<div class="feature-card">
-						<h3>{t.features.custom.title}</h3>
-						<p>{t.features.custom.desc}</p>
+                        <h3>Design Personalizzati</h3>
+                        <p>Aggiungi testi, loghi o immagini per creare capi davvero unici.</p>
 					</div>
 					<div class="feature-card">
-						<h3>{t.features.fast.title}</h3>
-						<p>{t.features.fast.desc}</p>
+                        <h3>Servizio Veloce</h3>
+                        <p>Tempi rapidi senza compromettere la qualità.</p>
 					</div>
 					<div class="feature-card">
-						<h3>{t.features.gifts.title}</h3>
-						<p>{t.features.gifts.desc}</p>
+                        <h3>Regali Perfetti</h3>
+                        <p>Ideali per compleanni, feste o occasioni speciali.</p>
 					</div>
 				</div>
 			</section>
 
-			<section class="testimonials-section">
-				<h2>{t.testimonials.title}</h2>
+            <section class="testimonials-section">
+                <h2>Cosa Dicono i Nostri Clienti</h2>
 				<div class="testimonials-grid">
 					<div class="testimonial-card">
 						<div class="testimonial-rating">★★★★★</div>
@@ -695,187 +673,108 @@ const t = translations[currentLang];
 				</div>
 			</section>
 
-			<section class="order-form-section">
-				<h2>{t.order.title}</h2>
+            <section class="order-form-section">
+                <h2>Effettua il Tuo Ordine</h2>
 				<div class="pricing-note">
-					<h3>{t.order.pricing}</h3>
-					<p><strong>{t.products.tshirt}:</strong> {currentLang === 'it' ? '€29.99' : '$29.99'} | <strong>{t.products.hoodie}:</strong> {currentLang === 'it' ? '€49.99' : '$49.99'} | <strong>{t.products.shirt}:</strong> {currentLang === 'it' ? '€34.99' : '$34.99'}</p>
-					<p><strong>{t.products.mug}:</strong> {currentLang === 'it' ? '€19.99' : '$19.99'} | <strong>{t.products.cap}:</strong> {currentLang === 'it' ? '€24.99' : '$24.99'} | <strong>{t.products.other}:</strong> {currentLang === 'it' ? 'A partire da €19.99' : 'Starting at $19.99'}</p>
-					<p class="price-display" id="selected-price" data-text-default={t.order.selectPrice}>{t.order.selectPrice}</p>
+                    <h3>Prezzi e Pagamento</h3>
+                    <p><strong>T-Shirt:</strong> €29.99 | <strong>Felpa:</strong> €49.99 | <strong>Camicia:</strong> €34.99</p>
+                    <p><strong>Tazza:</strong> €19.99 | <strong>Cappello:</strong> €24.99 | <strong>Altro:</strong> A partire da €19.99</p>
+                    <p class="price-display" id="selected-price" data-text-default="Seleziona un tipo di abbigliamento per vedere il prezzo">Seleziona un tipo di abbigliamento per vedere il prezzo</p>
 					<p style="margin-top: 15px; font-size: 0.95rem;">
-						<strong>{currentLang === 'it' ? 'Nota:' : 'Note:'}</strong> {t.order.note}
+                        <strong>Nota:</strong> Riceverai le istruzioni di pagamento via email dopo l'invio dell'ordine. Ti notificheremo all'indirizzo email qui sotto.
 					</p>
 				</div>
 				<form id="order-form" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="name">{t.order.name} *</label>
+                        <label for="name">Nome *</label>
 						<input type="text" id="name" name="name" required />
 					</div>
 
 					<div class="form-group">
-						<label for="email">{t.order.email} *</label>
+                        <label for="email">Email *</label>
 						<input type="email" id="email" name="email" required />
 					</div>
 
 					<div class="form-group">
-						<label for="clothing-type">{t.order.clothingType} *</label>
+                        <label for="clothing-type">Tipo di Abbigliamento *</label>
 						<select id="clothing-type" name="clothingType" required>
-							<option value="">{t.order.selectType}</option>
-							<option value="T-Shirt">{t.products.tshirt}</option>
-							<option value="Hoodie">{t.products.hoodie}</option>
-							<option value="Shirt">{t.products.shirt}</option>
-							<option value="Mug">{t.products.mug}</option>
-							<option value="Cap">{t.products.cap}</option>
-							<option value="Other">{t.products.other}</option>
+                            <option value="">Seleziona...</option>
+                            <option value="T-Shirt">T-Shirt</option>
+                            <option value="Hoodie">Felpa</option>
+                            <option value="Shirt">Camicia</option>
+                            <option value="Mug">Tazza</option>
+                            <option value="Cap">Cappello</option>
+                            <option value="Other">Altro</option>
 						</select>
 					</div>
 
 					<div class="form-group">
-						<label for="custom-text">{t.order.customText}</label>
-						<textarea id="custom-text" name="customText" placeholder={t.order.textPlaceholder}></textarea>
+                        <label for="custom-text">Testo Personalizzato</label>
+                        <textarea id="custom-text" name="customText" placeholder="Quale testo vuoi stampare?"></textarea>
 					</div>
 
 					<div class="form-group">
-						<label for="image">{t.order.image}</label>
+                        <label for="image">Carica Immagine (Max 5MB)</label>
 						<div class="file-upload-wrapper">
 							<input type="file" id="image" name="image" accept="image/*" />
-							<div class="file-upload-button">{t.order.chooseFile}</div>
+                            <div class="file-upload-button">Scegli File</div>
 						</div>
 						<div class="file-name" id="file-name"></div>
 					</div>
 
-					<button type="submit" class="submit-button" id="submit-btn">
-						{t.order.submit}
-					</button>
+                    <button type="submit" class="submit-button" id="submit-btn">Invia Ordine</button>
 
-					<div class="message success" id="success-message">
-						{t.order.success}
-					</div>
+                    <div class="message success" id="success-message">Ordine inviato con successo! Ti contatteremo a breve.</div>
 
-					<div class="message error" id="error-message">
-						{t.order.error}
-					</div>
+                    <div class="message error" id="error-message">Qualcosa è andato storto. Riprova.</div>
 				</form>
 			</section>
 		</div>
 
-		<script>
-			// Language detection and switching
-			(function() {
-				const storedLang = localStorage.getItem('preferredLanguage');
-				const html = document.documentElement;
-				
-				// Update HTML lang attribute if language is stored
-				if (storedLang && (storedLang === 'en' || storedLang === 'it')) {
-					html.lang = storedLang;
-					html.setAttribute('data-lang', storedLang);
-				}
-			})();
-			
-			// Language switcher
-			document.addEventListener('DOMContentLoaded', () => {
-				// Get current language from localStorage or default to 'en'
-				const currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
-				
-				// Update language switcher active state immediately
-				const langButtons = document.querySelectorAll('[data-lang]');
-				langButtons.forEach(button => {
-					const btn = button as HTMLElement;
-					const lang = btn.dataset.lang;
-					if (lang === currentLanguage) {
-						btn.classList.add('active');
-					} else {
-						btn.classList.remove('active');
-					}
-					
-					// Language switcher click handler
-					btn.addEventListener('click', (e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						const newLang = btn.dataset.lang;
-						if (newLang && (newLang === 'en' || newLang === 'it')) {
-							localStorage.setItem('preferredLanguage', newLang);
-							window.location.reload();
-						}
-					});
-				});
-
-				// Price display update
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Aggiorna il prezzo mostrato in base al tipo scelto
 				const clothingTypeSelect = document.getElementById('clothing-type') as HTMLSelectElement | null;
 				const selectedPriceDisplay = document.getElementById('selected-price');
 				
 				if (clothingTypeSelect && selectedPriceDisplay) {
-					const prices: Record<string, Record<string, string>> = {
-						en: {
-							'T-Shirt': '$29.99',
-							'Hoodie': '$49.99',
-							'Shirt': '$34.99',
-							'Mug': '$19.99',
-							'Cap': '$24.99',
-							'Other': 'Starting at $19.99'
-						},
-						it: {
-							'T-Shirt': '€29.99',
-							'Hoodie': '€49.99',
-							'Shirt': '€34.99',
-							'Mug': '€19.99',
-							'Cap': '€24.99',
-							'Other': 'A partire da €19.99'
-						}
-					};
-					
-					const lang = localStorage.getItem('preferredLanguage') || currentLanguage || 'en';
-					const priceData = prices[lang] || prices.en;
+                    const priceData: Record<string, string> = {
+                        'T-Shirt': '€29.99',
+                        'Hoodie': '€49.99',
+                        'Shirt': '€34.99',
+                        'Mug': '€19.99',
+                        'Cap': '€24.99',
+                        'Other': 'A partire da €19.99'
+                    };
 
 					clothingTypeSelect.addEventListener('change', (e) => {
 						const target = e.target as HTMLSelectElement;
 						const selectedType = target.value;
-						const translations_text = {
-							en: { selected: 'Selected' },
-							it: { selected: 'Selezionato' }
-						};
-						const selectedText = translations_text[lang as keyof typeof translations_text]?.selected || 'Selected';
+                        const selectedText = 'Selezionato';
 						
 						if (selectedType && priceData[selectedType]) {
 							selectedPriceDisplay.textContent = `${selectedText}: ${selectedType} - ${priceData[selectedType]}`;
 						} else {
-							const defaultText = selectedPriceDisplay.dataset.textDefault || 'Select a clothing type to see price';
+                            const defaultText = selectedPriceDisplay.dataset.textDefault || 'Seleziona un tipo di abbigliamento per vedere il prezzo';
 							selectedPriceDisplay.textContent = defaultText;
 						}
 					});
 				}
-			});
-
-			// File upload display
+            
+            // File upload display
 			const fileInput = document.getElementById('image');
 			const fileName = document.getElementById('file-name');
 
 				if (fileInput && fileName) {
-					const translations = {
-						en: {
-							selected: 'Selected',
-							fileTooLarge: 'File too large! Maximum size is 5MB.',
-							mb: 'MB'
-						},
-						it: {
-							selected: 'Selezionato',
-							fileTooLarge: 'File troppo grande! La dimensione massima è 5MB.',
-							mb: 'MB'
-						}
-					};
-					
-					const lang = localStorage.getItem('preferredLanguage') || 'en';
-					const t = translations[lang as keyof typeof translations] || translations.en;
-					
 					fileInput.addEventListener('change', (e) => {
 						const target = e.target as HTMLInputElement;
 						const file = target.files?.[0];
 						if (file) {
-							fileName.textContent = `${t.selected}: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} ${t.mb})`;
+                            fileName.textContent = `Selezionato: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
 							
 							// Check file size
 							if (file.size > 5 * 1024 * 1024) {
-								fileName.textContent = t.fileTooLarge;
+                                fileName.textContent = 'File troppo grande! La dimensione massima è 5MB.';
 								fileName.style.color = '#f87171';
 								target.value = '';
 								return;
@@ -922,7 +821,7 @@ const t = translations[currentLang];
 
 				// Disable submit button
 				submitBtn.disabled = true;
-				submitBtn.innerHTML = '<span class="spinner"></span>Submitting...';
+                submitBtn.innerHTML = '<span class="spinner"></span>Invio in corso...';
 
 				const formData = new FormData(orderForm);
 
@@ -940,20 +839,21 @@ const t = translations[currentLang];
 						if (fileName) fileName.textContent = '';
 					} else {
 						showMessage(true);
-						if (data.error && errorMessage) {
+                        if (data.error && errorMessage) {
 							errorMessage.textContent = data.error;
 						}
 					}
 				} catch (error) {
 					showMessage(true);
 					if (errorMessage) {
-						errorMessage.textContent = 'Network error. Please check your connection and try again.';
+                        errorMessage.textContent = 'Errore di rete. Controlla la connessione e riprova.';
 					}
 				} finally {
 					submitBtn.disabled = false;
-					submitBtn.innerHTML = 'Submit Order';
+                    submitBtn.innerHTML = 'Invia Ordine';
 				}
 			});
+            });
 		</script>
 	</body>
 </html>
