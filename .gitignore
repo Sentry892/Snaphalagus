@@ -26,5 +26,4 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 
-# API key file
-src/pages/api/order.ts
+# (keep API routes tracked)
