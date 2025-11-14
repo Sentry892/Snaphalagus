@@ -63,7 +63,7 @@ const seo = {
 			"url": siteUrl,
 			"logo": `${siteUrl}${logoImage.src}`,
 			"image": `${siteUrl}${logoImage.src}`,
-            "priceRange": "€19.99 - €49.99",
+            "priceRange": "€12 - €25",
 			"address": {
 				"@type": "PostalAddress",
                 "addressCountry": "IT"
@@ -677,8 +677,8 @@ const seo = {
                 <h2>Effettua il Tuo Ordine</h2>
 				<div class="pricing-note">
                     <h3>Prezzi e Pagamento</h3>
-                    <p><strong>T-Shirt:</strong> €29.99 | <strong>Felpa:</strong> €49.99 | <strong>Camicia:</strong> €34.99</p>
-                    <p><strong>Tazza:</strong> €19.99 | <strong>Cappello:</strong> €24.99 | <strong>Altro:</strong> A partire da €19.99</p>
+                    <p><strong>T-Shirt:</strong> €12 | <strong>Felpa:</strong> €25 | <strong>Camicia:</strong> €20</p>
+                    <p><strong>Tazza:</strong> €12 | <strong>Cappello:</strong> €20 | <strong>Altro:</strong> A partire da €12</p>
                     <p class="price-display" id="selected-price" data-text-default="Seleziona un tipo di abbigliamento per vedere il prezzo">Seleziona un tipo di abbigliamento per vedere il prezzo</p>
 					<p style="margin-top: 15px; font-size: 0.95rem;">
                         <strong>Nota:</strong> Riceverai le istruzioni di pagamento via email dopo l'invio dell'ordine. Ti notificheremo all'indirizzo email qui sotto.
@@ -739,12 +739,12 @@ const seo = {
 				
 				if (clothingTypeSelect && selectedPriceDisplay) {
                     const priceData: Record<string, string> = {
-                        'T-Shirt': '€29.99',
-                        'Hoodie': '€49.99',
-                        'Shirt': '€34.99',
-                        'Mug': '€19.99',
-                        'Cap': '€24.99',
-                        'Other': 'A partire da €19.99'
+                        'T-Shirt': '€12',
+                        'Hoodie': '€25',
+                        'Shirt': '€20',
+                        'Mug': '€12',
+                        'Cap': '€20',
+                        'Other': 'A partire da €12'
                     };
 
 					clothingTypeSelect.addEventListener('change', (e) => {
