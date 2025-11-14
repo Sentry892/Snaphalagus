@@ -9,5 +9,10 @@ This is a website for **Snaphalagus** a personalizate clothing designing agency
 3. npm run dev
 4. Then you can start making your changes
 ---
+## Feature to add
+
+1. a submit order page
+2. Update readme
+3. Better UI/UX
 
 **Hope you enjoy**
