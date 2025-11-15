@@ -21,9 +21,8 @@ const seo = {
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
-		<!--Google verification -->
+		<!-- Google Site Verification -->
 		<meta name="google-site-verification" content="P4kGJwwfOLKEzBvUlhMHHgswKABO28zDx2BAIOnfmwQ" />
-
 		<!-- Primary Meta Tags -->
 		<title>{seo.title}</title>
 		<meta name="title" content={seo.title} />
@@ -57,31 +56,117 @@ const seo = {
 		<link rel="canonical" href={siteUrl} />
 		
 		<!-- Structured Data -->
-        <script type="application/ld+json" set:html={JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "ClothingStore",
-			"name": "Snaphalagulus",
-            "description": seo.description,
-			"url": siteUrl,
-			"logo": `${siteUrl}${logoImage.src}`,
-			"image": `${siteUrl}${logoImage.src}`,
-            "priceRange": "€12 - €25",
-			"address": {
-				"@type": "PostalAddress",
-                "addressCountry": "IT"
-			},
-			"offers": {
-				"@type": "Offer",
+        <script type="application/ld+json" set:html={JSON.stringify([
+			{
+				"@context": "https://schema.org",
+				"@type": "ClothingStore",
+				"name": "Snaphalagulus",
+				"description": seo.description,
 				"url": siteUrl,
-                "priceCurrency": "EUR",
-				"availability": "https://schema.org/InStock",
-				"itemOffered": {
-					"@type": "Product",
-                    "name": "Abbigliamento Personalizzato",
-                    "description": "T-shirt personalizzate, felpe, camicie, tazze e abbigliamento su misura"
+				"logo": `${siteUrl}${logoImage.src}`,
+				"image": `${siteUrl}${logoImage.src}`,
+				"priceRange": "€12 - €25",
+				"address": {
+					"@type": "PostalAddress",
+					"addressCountry": "IT"
+				}
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "Product",
+				"name": "T-Shirt Personalizzata",
+				"description": "T-shirt personalizzata con stampa di qualità premium",
+				"image": `${siteUrl}${tshirtImage.src}`,
+				"brand": {
+					"@type": "Brand",
+					"name": "Snaphalagulus"
+				},
+				"offers": {
+					"@type": "Offer",
+					"url": siteUrl,
+					"priceCurrency": "EUR",
+					"price": "12.00",
+					"availability": "https://schema.org/InStock",
+					"itemCondition": "https://schema.org/NewCondition"
+				}
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "Product",
+				"name": "Felpa Personalizzata",
+				"description": "Felpa personalizzata con stampa di qualità premium",
+				"image": `${siteUrl}${hoodieImage.src}`,
+				"brand": {
+					"@type": "Brand",
+					"name": "Snaphalagulus"
+				},
+				"offers": {
+					"@type": "Offer",
+					"url": siteUrl,
+					"priceCurrency": "EUR",
+					"price": "25.00",
+					"availability": "https://schema.org/InStock",
+					"itemCondition": "https://schema.org/NewCondition"
+				}
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "Product",
+				"name": "Camicia Personalizzata",
+				"description": "Camicia personalizzata con stampa di qualità premium",
+				"image": `${siteUrl}${shirtImage.src}`,
+				"brand": {
+					"@type": "Brand",
+					"name": "Snaphalagulus"
+				},
+				"offers": {
+					"@type": "Offer",
+					"url": siteUrl,
+					"priceCurrency": "EUR",
+					"price": "20.00",
+					"availability": "https://schema.org/InStock",
+					"itemCondition": "https://schema.org/NewCondition"
+				}
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "Product",
+				"name": "Tazza Personalizzata",
+				"description": "Tazza personalizzata con stampa di qualità premium",
+				"image": `${siteUrl}${mugImage.src}`,
+				"brand": {
+					"@type": "Brand",
+					"name": "Snaphalagulus"
+				},
+				"offers": {
+					"@type": "Offer",
+					"url": siteUrl,
+					"priceCurrency": "EUR",
+					"price": "12.00",
+					"availability": "https://schema.org/InStock",
+					"itemCondition": "https://schema.org/NewCondition"
+				}
+			},
+			{
+				"@context": "https://schema.org",
+				"@type": "Product",
+				"name": "Cappello Personalizzato",
+				"description": "Cappello personalizzato con stampa di qualità premium",
+				"image": `${siteUrl}${logoImage.src}`,
+				"brand": {
+					"@type": "Brand",
+					"name": "Snaphalagulus"
+				},
+				"offers": {
+					"@type": "Offer",
+					"url": siteUrl,
+					"priceCurrency": "EUR",
+					"price": "20.00",
+					"availability": "https://schema.org/InStock",
+					"itemCondition": "https://schema.org/NewCondition"
 				}
 			}
-		})} />
+		])} />
 		<style>
 			* {
 				margin: 0;
