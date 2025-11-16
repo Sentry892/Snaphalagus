@@ -14,5 +14,6 @@ This is a website for **Snaphalagus** a personalizate clothing designing agency
 1. a submit order page
 2. Update readme
 3. Better UI/UX
-
+4. transition when clicking at the product
+5. More animations
 **Hope you enjoy**
